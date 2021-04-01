@@ -4,7 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import guru.springframework.sfgdi.config.SebaConfig;
 import guru.springframework.sfgdi.config.SfgConfig;
+import guru.springframework.sfgdi.config.SfgConstructorConfig;
 import guru.springframework.sfgdi.controllers.ConstructorInjectedController;
 import guru.springframework.sfgdi.controllers.I18nController;
 import guru.springframework.sfgdi.controllers.MyController;
@@ -74,6 +76,18 @@ public class SfgDiApplication {
 		System.out.println(sfgConfig.getUsername());
 		System.out.println(sfgConfig.getPassword());
 		System.out.println(sfgConfig.getJdbcurl());
+		
+		System.out.println("------- Constructor Binding");
+		SfgConstructorConfig sfgConstructorConfig = ctx.getBean(SfgConstructorConfig.class);
+		System.out.println(sfgConstructorConfig.getUsername());
+		System.out.println(sfgConstructorConfig.getPassword());
+		System.out.println(sfgConstructorConfig.getJdbcurl());
+		
+		System.out.println("------- Seba Config");
+		SebaConfig sebaConfig = (SebaConfig) ctx.getBean("sebaConfig");
+		System.out.println(sebaConfig.getUsername());
+		System.out.println(sebaConfig.getPassword());
+		System.out.println(sebaConfig.getJdbcurl());
 	}
 
 }

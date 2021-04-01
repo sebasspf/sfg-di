@@ -1,12 +1,12 @@
 package guru.springframework.sfgdi.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
 
 import com.springframework.pets.PetService;
 import com.springframework.pets.PetServiceFactory;
@@ -14,24 +14,23 @@ import com.springframework.pets.PetServiceFactory;
 import guru.springframework.sfgdi.datasource.FakeDataSource;
 import guru.springframework.sfgdi.repositories.EnglishGreetingRepository;
 import guru.springframework.sfgdi.repositories.EnglishGreetingRepositoryImpl;
-import guru.springframework.sfgdi.services.ConstructorGreetingService;
 import guru.springframework.sfgdi.services.I18nEnglishGreetingService;
 import guru.springframework.sfgdi.services.I18nSpanishGreetingService;
 import guru.springframework.sfgdi.services.PrimaryGreetingService;
 import guru.springframework.sfgdi.services.PropertyGreetingService;
 import guru.springframework.sfgdi.services.SetterGreetingService;
 
-//@PropertySource("classpath:datasource.properties")
+@EnableConfigurationProperties(SfgConstructorConfig.class)
 @ImportResource("classpath:sfgdi-config.xml")
 @Configuration
 public class GreetingServiceConfig {
 	
 	@Bean
-	FakeDataSource fakeDataSource(SfgConfig sfgConfig){ 
+	FakeDataSource fakeDataSource(SfgConstructorConfig sfgConstructorConfig){ 
 		FakeDataSource fakeDataSource = new FakeDataSource();
-		fakeDataSource.setUsername(sfgConfig.getUsername());
-		fakeDataSource.setPassword(sfgConfig.getPassword());
-		fakeDataSource.setJdbcurl(sfgConfig.getJdbcurl());
+		fakeDataSource.setUsername(sfgConstructorConfig.getUsername());
+		fakeDataSource.setPassword(sfgConstructorConfig.getPassword());
+		fakeDataSource.setJdbcurl(sfgConstructorConfig.getJdbcurl());
 		return fakeDataSource;
 	}
 	
@@ -84,4 +83,5 @@ public class GreetingServiceConfig {
 	SetterGreetingService setterGreetingService() {
 		return new SetterGreetingService();
 	}
+	
 }
